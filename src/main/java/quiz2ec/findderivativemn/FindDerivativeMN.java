@@ -16,6 +16,9 @@
 
 //package quiz2ec.findderivativemn;
 
+import java.util.Scanner;
+import java.util.Stack;
+import java.util.concurrent;
 /**
  *
  * @author michaelnguyen
