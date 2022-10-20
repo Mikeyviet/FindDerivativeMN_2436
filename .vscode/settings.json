@@ -2,5 +2,8 @@
     "emmet.excludeLanguages": [
         "xsl",
         "xslt"
+    ],
+    "cSpell.words": [
+        "findderivativemn"
     ]
 }
