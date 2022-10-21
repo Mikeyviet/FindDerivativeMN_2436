@@ -27,75 +27,51 @@ import java.util.*;
  */
 public class FindDerivativeMN {
 
-// The object that will be used to store the two numbers (coefficient and exponent). This,
-// - along with the pointer to the next node, will be used to create the nodes of the 
-// - linked list.
-    public class Digits {
 
-        int coEff;  // coefficient
-        int power;  // power
 
-        // Default constructor for digits
-        public Digits() {
-            coEff = 0;
-            power = 0;
-        }
+    private class PolynomialLL {
+        private Term head;  // First term in the list (polynomial)
+        private Term tail;  // Last term in the list (polynomial)
+        
+        // The object that will be used to store the two numbers (coefficient and exponent). This,
+        // - along with the pointer to the next node, will be used to create the nodes (terms) of
+        // - the linked list. I will use the term "term" to refer to the node and the object that
+        // - it contains.
 
-        // Parameterized constructor for digits
-        public Digits(int coEff, int power) {
-            this.coEff = coEff;
-            this.power = power;
-        }
+        private static class Term {
+            int coEff;  // coefficient
+            int power;  // power
+            Term next;  // pointer to the next term in the polynomial list
 
-    }
-        // The Node class to encapsulate a single term within a polynomial expression
-        public class Node<E> {
-
-            E data;  // The object containing the coefficient and power
-            Node<E> nextTerm;  // Reference to the next term in the list (polynomial)
-
-            // Constructor to initialization. Therefore, the values of coEff and power
-            // - need to be initialized when created
-            public Node(int coEff, int power) {
-                data = new Digits(coEff, power);
-                data.nextTerm = null;
+            // Default constructor for Term
+            Term() {
+                coEff = 0;
+                power = 0;
             }
 
-            // Default Constructor to initialize values to initialize coefficients and
-            // - powers to 0 and the next term to null.
-            public Node() {
-                data = new Digits();
-                data.coEff = 0;
-                data.power = 0;
-                nextTerm = null;
-
+            // Parameterized constructor for Term
+            Term(int coEff, int power) {
+                this.coEff = coEff;
+                this.power = power;
             }
 
         }
-
-    public class LinkedList<E> {
-        int size;  // The size of the linked list
-
-        Node<E> head;  // First term in the list (polynomial)
-        Node<E> tail;  // Last term in the list (polynomial)
-
-        public LinkedList() {
+        // Default constructor for PolynomialLL
+        PolynomialLL() {
             head = null;
-            tail = null;
-            size = 0;
-        }
-
-        public LinkedList(int coEff, int power) {
-            head = new Node(coEff, power);
             tail = head;
-            size++;
+        }
+        // Parameterized constructor for PolynomialLL
+        PolynomialLL(int coEff, int power) {
+            head = new Term(coEff, power);
+            tail = head;
         }
     }
 
     public static void main(String[] args) {
 
-        LinkedList myPolynomial = new LinkedList<>();
-        Node<Digits> Term = new Node<>();
+        PolynomialLL myPolynomial = new PolynomialLL<>();
+        Term<Term> Term = new Term<>();
 
         myPolynomial = getTerm(myPolynomial);
 
@@ -105,9 +81,9 @@ public class FindDerivativeMN {
      * @info This mΩethod will prompt user to enter a polynomial expression
      * @param expression structure to store the polynomial expression
      */
-    public LinkedList getTerm(LinkedList expression) {
+    public PolynomialLL getTerm(PolynomialLL expression) {
 
-        LinkedList temp = expression;
+        PolynomialLL temp = expression;
         
         // Give brief explanation of definition and structure of a polynomial expression to give
         // - users a reference for how to input their expression.
