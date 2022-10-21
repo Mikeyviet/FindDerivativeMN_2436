@@ -5,5 +5,20 @@
     ],
     "cSpell.words": [
         "findderivativemn"
-    ]
+    ],
+    "java.format.settings.url": ".vscode/java-formatter.xml",
+    "workbench.colorCustomizations": {
+        "activityBar.foreground": "#E5B4FF",
+        "activityBar.background": "#250039",
+        "activityBar.inactiveForeground": "#502C9F",
+        "activityBarBadge.foreground": "#360020",
+        "activityBarBadge.background": "#FF76C6",
+        "statusBar.foreground": "#FFD0B0",
+        "statusBar.background": "#914B1B",
+        "statusBarItem.hoverBackground": "#564410",
+        "statusBarItem.remoteForeground": "#DEEF81",
+        "statusBarItem.remoteBackground": "#5A6B00",
+        "statusBar.debuggingForeground": "#000000",
+        "statusBar.debuggingBackground": "#C78252"
+    }
 }
