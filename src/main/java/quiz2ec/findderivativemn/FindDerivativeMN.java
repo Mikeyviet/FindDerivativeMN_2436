@@ -230,6 +230,13 @@ public class FindDerivativeMN {
         // - as delimiters
         String[] parts = tempPolynomial.replace("^", "").split("((?=\\+)|(?=\\-)|x)");
         
+        String[] numbers = new String[parts.length];
+        
+        // Remove all blank spaces in each term with string.replaceAll().
+        for(int i = 0; i < parts.length; i++){
+            numbers[i] = parts[i].replaceAll("\\s+", "");
+        }
+        
         // The polynomial string will be split up into individual terms using a "whitespace" 
         // - as the delimiter and will be stored in an array of strings called "parts"
         
@@ -238,31 +245,15 @@ public class FindDerivativeMN {
         String testString = "12x^5 + 9x^4 + 26x^3 - 18x^2 + 10x^1 - 5x^0"; 
         System.out.println(java.util.Arrays.toString(testString.split("(?=[+-])")));
 
-        // Defining pattern and store in REGEX
-        String REGEX = "x^";
-        
-        // Convert CharSequence to String for REGEX
-        
-        // Generate pattern from REGEX to use as delimiter
-        Pattern xExponent = Pattern.compile(REGEX);
-        
-        
-        String[] parts2 = xExponent.split(String.valueOf(parts), 0);
-        
-//        String[] parts3 = String.valueOf(parts2);
-
-//        CharSequence[] csa;
-//        
-//        csa = Arrays.copyOf(parts2, parts2.length, CharSequence[].class);
         
 
         // Loop through the array and extract the coefficient and exponent of each term and 
         // - store them in the linked list
-        for (int i = 0; i < parts.length; i += 2) {
+        for (int i = 0; i < numbers.length; i += 2) {
             try {
                 // Extract the coefficient and exponent of the term
-                coefficient = Integer.parseInt(parts[i]);
-                exponent = Integer.parseInt(parts[i + 1]);
+                coefficient = Integer.parseInt(numbers[i]);
+                exponent = Integer.parseInt(numbers[i + 1]);
 
                 // Insert the term into the linked list
                 expressionLL.insertTerm(coefficient, exponent);
