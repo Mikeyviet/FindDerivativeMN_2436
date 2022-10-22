@@ -10,18 +10,23 @@
         "power"
     ],
     "java.format.settings.url": ".vscode/java-formatter.xml",
+    "explorer.autoReveal": true,
+    "editor.semanticHighlighting.enabled": "configuredByTheme",
+    "blockman.n04ColorComboPreset": "Classic Light (Super gradients)",
+    "blockman.n04Sub02ColorComboPresetForLightTheme": "none",
+    "blockman.n04Sub01ColorComboPresetForDarkTheme": "Classic Dark 1 (Super gradients)",
     "workbench.colorCustomizations": {
         "activityBar.foreground": "#E5B4FF",
         "activityBar.background": "#250039",
         "activityBar.inactiveForeground": "#502C9F",
         "activityBarBadge.foreground": "#360020",
         "activityBarBadge.background": "#FF76C6",
-        "statusBar.foreground": "#FFD0B0",
-        "statusBar.background": "#914B1B",
-        "statusBarItem.hoverBackground": "#564410",
-        "statusBarItem.remoteForeground": "#DEEF81",
-        "statusBarItem.remoteBackground": "#5A6B00",
+        "statusBar.foreground": "#E0EE81",
+        "statusBar.background": "#5C6A00",
+        "statusBarItem.hoverBackground": "#33570E",
+        "statusBarItem.remoteForeground": "#ACFF9C",
+        "statusBarItem.remoteBackground": "#268315",
         "statusBar.debuggingForeground": "#000000",
-        "statusBar.debuggingBackground": "#C78252"
+        "statusBar.debuggingBackground": "#93A235"
     }
 }

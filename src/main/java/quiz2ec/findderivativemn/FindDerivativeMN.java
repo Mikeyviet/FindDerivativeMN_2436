@@ -15,13 +15,11 @@
  * The program must implement the linked list data structure to store the
  * polynomial expression.
  */
-
 package quiz2ec.findderivativemn;
 
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
-
 
 /**
  * @Name FindDerivativeMN
@@ -31,19 +29,18 @@ import java.util.regex.Pattern;
  */
 public class FindDerivativeMN {
 
-
-
     private static class PolynomialLL {
+
         private Term head;  // First term in the list (polynomial)
         private Term tail;  // Last term in the list (polynomial)
         private int termCount;  // Number of terms in the list (polynomial)
-        
+
         // The object that will be used to store the two numbers (coefficient and exponent). This,
         // - along with the pointer to the next node, will be used to create the nodes (terms) of
         // - the linked list. I will use the term "term" to refer to the node and the object that
         // - it contains.
-
         private static class Term {
+
             int coEff;  // coefficient
             int power;  // power
             Term next;  // pointer to the next term in the polynomial list
@@ -61,38 +58,39 @@ public class FindDerivativeMN {
             }
 
             // Method to set the coefficient of the term
-            public void setCoEff(int coEff){
+            public void setCoEff(int coEff) {
                 this.coEff = coEff;
             }
 
             // Method to set the power of the term
-            public void setPower(int power){
+            public void setPower(int power) {
                 this.power = power;
             }
 
             // Method to get the coefficient of the term
-            public int getCoEff(){
+            public int getCoEff() {
                 return coEff;
             }
 
             // Method to get the power of the term
-            public int getPower(){
+            public int getPower() {
                 return power;
             }
 
             // Method to overrides the toString() function to print contents of the term
-            
             public String toString() {
                 return " " + this.getCoEff() + "x^" + this.getPower();
             }
-            
+
         }
+
         // Default constructor for PolynomialLL
         PolynomialLL() {
             head = null;
             tail = head;
             termCount = 0;
         }
+
         // Parameterized constructor for PolynomialLL
         PolynomialLL(int coEff, int power) {
             head = new Term(coEff, power);
@@ -102,60 +100,40 @@ public class FindDerivativeMN {
 
         /**
          * @Name insertTerm
-         * @info This method will insert a term into the linked list. If the list is empty,
-         *          the new node will become the head and the tail will point to the head. 
-         *          If the list is not empty, the new node will be inserted at the end of 
-         *          the list. The method will return true if the term was successfully
-         * 
+         * @info This method will insert a term into the linked list. If the
+         * list is empty, the new node will become the head and the tail will
+         * point to the head. If the list is not empty, the new node will be
+         * inserted at the end of the list. The method will return true if the
+         * term was successfully
+         *
          * @param coEff - the coefficient of the term
          * @param power - the power of the term
-         * @return boolean - true if the term was successfully inserted, false if not
+         * @return boolean - true if the term was successfully inserted, false
+         * if not
          */
-        public Boolean insertTerm(int coEff, int power){
-            if(head == null){
+        public Boolean insertTerm(int coEff, int power) {
+            if (head == null)
+            {
                 head = new Term(coEff, power);
                 tail = head;
-            }
-            else{
+            } else
+            {
                 tail.next = new Term(coEff, power);
                 tail = tail.next;
             }
             // increase the total of terms in the list
-            termCount++;    
+            termCount++;
             return true;
         }
 
         // Method to print the contents of the linked list
-        public void printList(PolynomialLL list){
+        public void printList(PolynomialLL list) {
             Term temp = head;
-            while(temp != null){
+            while (temp != null)
+            {
                 System.out.print(temp.toString());
                 temp = temp.next;
             }
-        }
-    }
-    
-    private static class Parts{
-        private String terms;
-        
-        // Constructor
-        Parts(String terms){
-            this.terms = terms;
-        }
-        
-        // Method to set terms
-        public void setTerms(String terms){
-            this.terms = terms;
-        }
-        
-        // Method to get terms
-        public String getTerms(){
-            return terms;
-        }
-        
-        // Override constructor to print the data in object
-        public String toString(){
-            return this.terms;
         }
     }
 
@@ -171,19 +149,21 @@ public class FindDerivativeMN {
         System.out.print("The polynomial expression is: ");
         myPolynomial.printList(myPolynomial);
 
-
         System.out.println();
-        
+
     }
 
     /**
-     * @info This method will prompt user to enter a polynomial expression
-     * @param expression structure to store the polynomial expression
+     * @name getTerm()
+     * @info This method will provide a brief explanation on polynomials followed 
+     *          by a prompt for the user to enter a polynomial expression based on 
+     *          the format provided in the explanation.
+     * @param expression Linked List structure to store the polynomial expression 
+     *          that was entered by user.
      */
     public static void getTerm(PolynomialLL expression) {
 
 //        PolynomialLL temp = expression;
-
         Scanner input = new Scanner(System.in);
         // Variable to hold the user's input
         String Polynomial = "";
@@ -199,71 +179,75 @@ public class FindDerivativeMN {
 
         Polynomial = input.nextLine();
 
+        // Delete This - Only for reference
         System.out.println("You entered: " + Polynomial);
-        
-        // Split the input string into individual terms to store into a linked list
-        splitPolynomial(expression, Polynomial);
-        
-        
 
-        // print the linked list
+        splitPolynomial(expression, Polynomial);
 
     }
 
     /**
      * @name splitPolynomial
-     * @info This method will split the string containing the polynomial expression into individual terms and store them in a linked list
-     * @param expressionLL Linked List structure to store the polynomial expression
+     * @info This method will split the string containing the polynomial
+     * expression into individual terms and store them in a linked list
+     * @param expressionLL Linked List structure to store the polynomial
+     * expression
      * @param tempPolynomial string containing the polynomial expression
      */
-    public static void splitPolynomial(PolynomialLL expressionLL, String tempPolynomial)
-    {
-        // variable to hold the coefficient of the term
-        int coefficient = 0;
-        int exponent = 0;
-        
-        // Create an array list of terms objects
-//        ArrayList<Parts> TermsList = new ArrayList<Parts>();
+    public static void splitPolynomial(PolynomialLL expressionLL, String tempPolynomial) {
 
         // Search and remove power symbol ('^') using the string replace() and
         // - split the polynomial using the string split() with look lookahead and lookbehind Regex
         // - as delimiters
         String[] parts = tempPolynomial.replace("^", "").split("((?=\\+)|(?=\\-)|x)");
-        
+
         String[] numbers = new String[parts.length];
-        
+
         // Remove all blank spaces in each term with string.replaceAll().
-        for(int i = 0; i < parts.length; i++){
+        for (int i = 0; i < parts.length; i++)
+        {
             numbers[i] = parts[i].replaceAll("\\s+", "");
         }
-        
-        // The polynomial string will be split up into individual terms using a "whitespace" 
-        // - as the delimiter and will be stored in an array of strings called "parts"
-        
-//        
-        // test code
-        String testString = "12x^5 + 9x^4 + 26x^3 - 18x^2 + 10x^1 - 5x^0"; 
-        System.out.println(java.util.Arrays.toString(testString.split("(?=[+-])")));
 
-        
+        // Extract all the numbers from the terms 
+        extractNumbers(expressionLL, numbers);
+
+    }
+
+    /**
+     * @name extractNumbers()
+     * @info Method extracts all the numerical values from the array of strings.
+     *          The values are then inserted in the linked list as the 
+     *          coefficient and power attributes.
+     * @param expression The reference to the polynomial linked list
+     * @param extractedNum The string containing polynomial without whitespaces and '^' symbols
+     */
+    public static void extractNumbers(PolynomialLL expression, String[] extractedNum) {
+
+        // Extract all the numbers from the terms 
+        // extractNumbers(expressionLL);
+        // variable to hold the coefficient of the term
+        int coefficient = 0;
+        int exponent = 0;
 
         // Loop through the array and extract the coefficient and exponent of each term and 
         // - store them in the linked list
-        for (int i = 0; i < numbers.length; i += 2) {
-            try {
+        for (int i = 0; i < extractedNum.length; i += 2)
+        {
+            try
+            {
                 // Extract the coefficient and exponent of the term
-                coefficient = Integer.parseInt(numbers[i]);
-                exponent = Integer.parseInt(numbers[i + 1]);
+                coefficient = Integer.parseInt(extractedNum[i]);
+                exponent = Integer.parseInt(extractedNum[i + 1]);
 
                 // Insert the term into the linked list
-                expressionLL.insertTerm(coefficient, exponent);
+                expression.insertTerm(coefficient, exponent);
 
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e)
+            {
                 throw new IllegalArgumentException();
             }
         }
-
-
 
     }
 
