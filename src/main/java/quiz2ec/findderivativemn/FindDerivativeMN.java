@@ -108,7 +108,7 @@ public class FindDerivativeMN {
          *
          * @param coEff - the coefficient of the term
          * @param power - the power of the term
-         * @return boolean - true if the term was successfully inserted, false
+         * @return Boolean - true if the term was successfully inserted, false
          * if not
          */
         public Boolean insertTerm(int coEff, int power) {
@@ -127,14 +127,19 @@ public class FindDerivativeMN {
         }
 
         // Method to print the contents of the linked list
-        public void printList(PolynomialLL list) {
-            Term temp = head;
+        public void printList() {
+            Term temp = this.head;
             while (temp != null)
             {
                 System.out.print(temp.toString());
+                if(temp != tail){
+                    System.out.print(" + ");
+                }
                 temp = temp.next;
             }
         }
+
+                
     }
 
     public static void main(String[] args) {
@@ -143,12 +148,17 @@ public class FindDerivativeMN {
         PolynomialLL myPolynomial = new PolynomialLL();
 
         // Get the polynomial expression from the user
-        getTerm(myPolynomial);
+        getPolynomial(myPolynomial);
+     
+        
+        // Calculate derivate of polynomial
+        // differentiatePolynomial(myPolynomial);
 
+        
+        // Delete The lines below - Used for Reference
         // Display the polynomial expression
         System.out.print("The polynomial expression is: ");
-        myPolynomial.printList(myPolynomial);
-
+        myPolynomial.printList();
         System.out.println();
 
     }
@@ -161,7 +171,7 @@ public class FindDerivativeMN {
      * @param expression Linked List structure to store the polynomial expression 
      *          that was entered by user.
      */
-    public static void getTerm(PolynomialLL expression) {
+    public static void getPolynomial(PolynomialLL expression) {
 
 //        PolynomialLL temp = expression;
         Scanner input = new Scanner(System.in);
@@ -179,11 +189,13 @@ public class FindDerivativeMN {
 
         Polynomial = input.nextLine();
 
+        simplifyPolynomial(expression, Polynomial);
+
+        
         // Delete This - Only for reference
         System.out.println("You entered: " + Polynomial);
-
-        splitPolynomial(expression, Polynomial);
-
+        expression.printList();
+        System.out.println();
     }
 
     /**
@@ -194,33 +206,68 @@ public class FindDerivativeMN {
      * expression
      * @param tempPolynomial string containing the polynomial expression
      */
-    public static void splitPolynomial(PolynomialLL expressionLL, String tempPolynomial) {
+    public static void simplifyPolynomial(PolynomialLL expressionLL, String tempPolynomial) {
 
+        // Array to hold the terms of the polynomial for use with the simplification
+        // - methods
+        String[] numbers;
+
+        // Split the polynomial into individual terms
+        numbers = splitTerms(tempPolynomial);
+                
+        // Extract all the numbers from the terms 
+        extractNumbers(expressionLL, numbers);
+        
+        // Sort the terms in the polynomial from largerst to smallest power
+        sortTerms(expressionLL);    
+        
+        // Add all the "like" terms (terms containing variables with the same 
+        // - degree) together in preparation of sorting
+        addLikeTerms(expressionLL);
+        
+        
+        System.out.println();
+    }
+
+    /**
+     * @name splitTerms()
+     * @info Method to split the polynomial into individual terms and store the 
+     *          new terms in an array of strings
+     * @param polynomial The string containing the polynomial expression received from
+     *          input.
+     * @return numbers The string array containing the individual terms retrieved
+     *          from the polynomial.
+     */
+    public static String[] splitTerms(String polynomial){
+        
         // Search and remove power symbol ('^') using the string replace() and
         // - split the polynomial using the string split() with look lookahead and lookbehind Regex
         // - as delimiters
-        String[] parts = tempPolynomial.replace("^", "").split("((?=\\+)|(?=\\-)|x)");
-
+        String[] parts = polynomial.replace("^", "").split("((?=\\+)|(?=\\-)|x)");
+        
+        // Create array to store the the terms after all the white spaces and 
+        // - power symbols ('^') have been removed from them.
         String[] numbers = new String[parts.length];
 
         // Remove all blank spaces in each term with string.replaceAll().
         for (int i = 0; i < parts.length; i++)
         {
             numbers[i] = parts[i].replaceAll("\\s+", "");
-        }
-
-        // Extract all the numbers from the terms 
-        extractNumbers(expressionLL, numbers);
-
+        }        
+        
+        return numbers;
     }
-
+    
     /**
      * @name extractNumbers()
      * @info Method extracts all the numerical values from the array of strings.
      *          The values are then inserted in the linked list as the 
      *          coefficient and power attributes.
      * @param expression The reference to the polynomial linked list
-     * @param extractedNum The string containing polynomial without whitespaces and '^' symbols
+     * @param extractedNum The string array containing polynomial without 
+     *          whitespaces and '^' symbols
+     * @throws IllegalArgumentException() Exception thrown for data that is not
+     *          a numerical value (integer)
      */
     public static void extractNumbers(PolynomialLL expression, String[] extractedNum) {
 
@@ -249,6 +296,111 @@ public class FindDerivativeMN {
             }
         }
 
+    }    /**
+     * @name addLikeTerms()
+     * @info Method will compare all the degrees of term variables for matching
+     *      degrees and combine those terms by adding the term values together.
+     * @param likePoly The linked list structure containing the polynomial 
+     *      expression to be simplified.
+     */
+    public static void addLikeTerms(PolynomialLL likePoly){
+        
+        int tempTotalCoEff = 0;
+        
+        // A reference to the current term in the polynomial (linked list)
+        PolynomialLL.Term currentTerm;
+        
+        PolynomialLL.Term prevTerm;
+        
+        PolynomialLL.Term nextTerm;
+        
+        // Point the currentTerm to the beginning of the linked list
+        currentTerm = likePoly.head;
+        nextTerm = currentTerm.next;
+
+             
+        prevTerm = null;
+           
+        while(currentTerm != null)
+        {
+            
+            
+            if(currentTerm.power == nextTerm.power)
+            {
+                tempTotalCoEff = currentTerm.coEff + nextTerm.coEff;
+                likePoly.head.setCoEff(tempTotalCoEff);
+                
+                // Replace the head of the list
+                likePoly.head = currentTerm.next;
+                likePoly.termCount--;                         
+            }
+            
+            prevTerm = currentTerm;
+            currentTerm = currentTerm.next;     
+        }
+        
+        if(currentTerm == null)
+        {
+            return;
+        } 
+
+            prevTerm.next = currentTerm.next;
+            
+            tempTotalCoEff = 0;
     }
+    
+
+
+    
+    /**
+     * @name sortTerms()
+     * @info Method will sort the terms in the polynomial by the degrees of the
+     *      variables from largest to smallest
+     * @param sortedPoly 
+     */
+    public static void sortTerms(PolynomialLL sortedPoly){
+        
+        int tempPower = 0;
+        int tempCoEff = 0;
+        
+        // A reference to the current term in the polynomial (linked list)
+        PolynomialLL.Term currentTerm;
+        
+        PolynomialLL.Term nextTerm;
+        
+        // Point the currentTerm to the beginning of the linked list
+        currentTerm = sortedPoly.head;
+
+        
+        while(currentTerm != null){
+            // Move the reference to the next term in order to compare it with the
+            // - first term.            
+            nextTerm = currentTerm.next;
+            
+            while(nextTerm != null)
+            {
+                if(currentTerm.power < nextTerm.power)
+                {
+                    tempPower = currentTerm.power;
+                    tempCoEff = currentTerm.coEff;
+                    currentTerm.power = nextTerm.power;
+                    currentTerm.coEff = nextTerm.coEff;
+                    nextTerm.power = tempPower;
+                    nextTerm.coEff = tempCoEff;
+                }
+                nextTerm = nextTerm.next;
+            }
+            currentTerm = currentTerm.next;
+        }        
+    }
+    
+    /**
+     * @name differentiatePolynomial()
+     * @info Method will calculate the derivative of the give polynomial
+     * @param derivative 
+     */
+    public static void differentiatePolynomial(PolynomialLL derivative){
+        
+    } 
 
 }
