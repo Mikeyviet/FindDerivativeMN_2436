@@ -1,0 +1,20 @@
+{
+    "emmet.excludeLanguages": [
+        "xsl",
+        "xslt"
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.foreground": "#F7B282",
+        "activityBar.background": "#000000",
+        "activityBar.inactiveForeground": "#8A2623",
+        "activityBarBadge.foreground": "#000000",
+        "activityBarBadge.background": "#A6BC2C",
+        "statusBar.foreground": "#FFE6FB",
+        "statusBar.background": "#9E2F8A",
+        "statusBarItem.hoverBackground": "#732A4C",
+        "statusBarItem.remoteForeground": "#FFD4D9",
+        "statusBarItem.remoteBackground": "#A53945",
+        "statusBar.debuggingForeground": "#2D0025",
+        "statusBar.debuggingBackground": "#D466C1"
+    }
+}

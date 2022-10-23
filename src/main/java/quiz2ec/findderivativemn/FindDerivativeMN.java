@@ -243,7 +243,7 @@ public class FindDerivativeMN {
         // Search and remove power symbol ('^') using the string replace() and
         // - split the polynomial using the string split() with look lookahead and lookbehind Regex
         // - as delimiters
-        String[] parts = polynomial.replace("^", "").split("((?=\\+)|(?=\\-)|x)");
+        String[] parts = polynomial.replace("^", "").split("(?=\\+)|(?=\\-)|x");
         
         // Create array to store the the terms after all the white spaces and 
         // - power symbols ('^') have been removed from them.
